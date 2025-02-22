@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    *{
+        font-family: sans-serif;
+        font-weight: bold;
+    }
+
+    body{
+        margin: 0;
+        background-color: rgb(255, 213, 134);
+    }
+
+    .container{
+        background-image: url(orange_background.png);
+        background-repeat: no-repeat;
+        background-position: bottom;
+        background-color: white;
+        box-sizing: border-box;
+        width: 850px;
+        height: 1450px;
+        margin: auto;
+    }
+
+    .container-2{
+        background-image: url(orange_background_2.png);
+        background-repeat: no-repeat;
+        background-position: top;
+    }
+
+    .form{
+        width: 400px;
+        padding-left: 80px;
+        padding-bottom: 25px;
+        padding-top: 2px;
+        border-radius: 30px;
+        box-sizing: border-box;
+        background-color: rgb(186, 121, 0);
+        margin: auto;
+        position: relative;
+        top: 75px;
+    }
+
+    .kotak-hasil {
+        border: 1px solid #000;
+        padding: 10px;
+        width: 200px;
+        margin-top: 10px;
+        background-color: rgb(250, 206, 125);
+        border-radius: 10px;
+        border: none;
+        color: rgb(126, 85, 11);
+    }
+
+    h2{
+        color: rgb(240, 205, 140);
+    }
+
+    input{
+        background-color: rgb(250, 206, 125);
+        border: none;
+        border-radius: 5px;
+    }
+
+    label{
+        color: rgb(250, 206, 125);
+    }
+
+    button{
+        padding: 4px 10px;
+        border: none;
+        background-color: rgb(215, 145, 16);
+        color: white;
+        border-radius: 6px;
+    }
+
+    select{
+        background-color: rgb(235, 154, 4);
+        color: white;
+        border-radius: 5px;
+    }
+
+    .ktp-container h2 {
+        margin-bottom: 10px;
+        padding-left: 100px;
+        color: rgb(255, 211, 130);
+    }
+
+    .ktp-container p {
+        margin: 5px 0;
+        position: relative;
+        left: -20px;
+        color: rgb(246, 213, 153);
+    }
+
+    input::placeholder{
+        color: rgb(118, 82, 15);
+    }
+    </style>
+    <title>Tugas Function JS</title>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="container-2">
+            <div class="harga-didiskon form">
+                <h2>Form Hitung Diskon</h2>
+                <form onsubmit="hitungDiskon(event)">
+                    <label for="harga">Harga Produk: <br>Rp.</label>
+                    <input type="number" id="harga" min="0" required><br><br>
+
+                    <label for="diskon">Diskon (%):</label><br>
+                    <input type="number" id="diskon" min="0" max="100" required><br><br>
+
+                    <button type="submit">Hitung</button>
+                </form>
+
+                <div id="hasil" class="kotak-hasil">Rp.</div>
+            </div>
+        
+
+            <script>
+                function hitungDiskon(event) {
+                    event.preventDefault();
+
+                    const harga = parseFloat(document.getElementById('harga').value);
+                    const diskon = parseFloat(document.getElementById('diskon').value);
+
+                    const jumlahDiskon = harga * (diskon / 100);
+                    const totalBayar = harga - jumlahDiskon;
+
+                    document.getElementById('hasil').innerHTML = 
+                    ` Rp ${totalBayar.toFixed(2)} `;
+                }
+            </script><br><br>
+
+            <div class="form-suhu form">
+                <h2>Form Konversi Suhu</h2>
+                <form onsubmit="konversiSuhu(event)">
+                    <label for="input-suhu">Suhu: <br></label>
+                    <input type="number" id="input-suhu" required><br><br>
+
+                    <label for="satuan-asal">Dari Satuan:</label><br>
+                    <select id="satuan-asal" required>
+                        <option value="C">Celsius</option>
+                        <option value="F">Fahrenheit</option>
+                        <option value="K">Kelvin</option>
+                        <option value="R">Reaumur</option>
+                    </select><br><br>
+
+                    <label for="satuan-tujuan">Ke Satuan:</label><br>
+                    <select id="satuan-tujuan" required>
+                        <option value="C">Celsius</option>
+                        <option value="F">Fahrenheit</option>
+                        <option value="K">Kelvin</option>
+                        <option value="R">Reaumur</option>
+                    </select><br><br>
+
+                    <button type="submit">Konversi</button>
+                </form>
+
+                <div id="hasil-suhu" class="kotak-hasil">Hasil: </div>
+            </div>
+        </div>
+
+        <script>
+            function konversiSuhu(event) {
+                event.preventDefault();
+                const suhu = parseFloat(document.getElementById('input-suhu').value);
+                const satuanAsal = document.getElementById('satuan-asal').value;
+                const satuanTujuan = document.getElementById('satuan-tujuan').value;
+                let hasil = suhu;
+
+                if (satuanAsal === 'C') {
+                    if (satuanTujuan === 'F') hasil = (suhu * 9/5) + 32;
+                    else if (satuanTujuan === 'K') hasil = suhu + 273.15;
+                    else if (satuanTujuan === 'R') hasil = suhu * 4/5;
+                } else if (satuanAsal === 'F') {
+                    if (satuanTujuan === 'C') hasil = (suhu - 32) * 5/9;
+                    else if (satuanTujuan === 'K') hasil = (suhu - 32) * 5/9 + 273.15;
+                    else if (satuanTujuan === 'R') hasil = (suhu - 32) * 4/9;
+                } else if (satuanAsal === 'K') {
+                    if (satuanTujuan === 'C') hasil = suhu - 273.15;
+                    else if (satuanTujuan === 'F') hasil = (suhu - 273.15) * 9/5 + 32;
+                    else if (satuanTujuan === 'R') hasil = (suhu - 273.15) * 4/5;
+                } else if (satuanAsal === 'R') {
+                    if (satuanTujuan === 'C') hasil = suhu * 5/4;
+                    else if (satuanTujuan === 'F') hasil = (suhu * 9/4) + 32;
+                    else if (satuanTujuan === 'K') hasil = (suhu * 5/4) + 273.15;
+                }
+
+                document.getElementById('hasil-suhu').innerHTML = `Hasil: ${hasil.toFixed(2)} °${satuanTujuan}`;
+            }
+        </script><br><br>
+
+        <div class="kalkulator form"> 
+            <h2>Kalkulator Sederhana</h2>
+            <form onsubmit="event.preventDefault(); kalkulator();">
+                <input type="number" id="angka1" placeholder="Masukkan angka pertama" required>
+                <select id="operator">
+                    <option value="+">+</option>
+                    <option value="-">-</option>
+                    <option value="*">*</option>
+                    <option value="/">/</option>
+                </select><br><br>
+                <input type="number" id="angka2" placeholder="Masukkan angka kedua" required><br><br>
+                <button type="submit">Hitung</button>
+            </form>
+            <div id="hasilBox" class="kotak-hasil">Hasil: </div>
+
+            <script>
+                function kalkulator() {
+                    const angka1 = parseFloat(document.getElementById("angka1").value);
+                    const angka2 = parseFloat(document.getElementById("angka2").value);
+                    const operator = document.getElementById("operator").value;
+                    let hasil;
+        
+                    switch (operator) {
+                        case '+':
+                            hasil = angka1 + angka2;
+                            break;
+                        case '-':
+                            hasil = angka1 - angka2;
+                            break;
+                        case '*':
+                            hasil = angka1 * angka2;
+                            break;
+                        case '/':
+                            hasil = angka2 !== 0 ? angka1 / angka2 : "Error: Pembagian dengan nol tidak diperbolehkan";
+                            break;
+                        default:
+                            hasil = "Error: Operator tidak dikenali";
+                    }
+        
+                    document.getElementById("hasilBox").innerText = "Hasil: " + hasil;
+                }
+            </script>
+        </div><br><br>
+
+        <div class="ktp form">
+            <div id="ktpDisplay" class="ktp-container"></div>
+        
+            <script>
+                function tampilkanKTP(nama, tempat_dan_tanggal_lahir, jenis_kelamin, agama, kerja, kewarganegaraan, berlaku_hingga, nik, alamat) {
+                    document.getElementById("ktpDisplay").innerHTML = `
+                        <h2>KTP</h2>
+                        <p>Nama: ${nama}</p>
+                        <p>Tempat & Tanggal lahir: ${tempat_dan_tanggal_lahir}</p>
+                        <p>Jenis kelamin: ${jenis_kelamin}</p>
+                        <p>Agama: ${agama}</p>
+                        <p>Status Pekerjaan: ${kerja}</p>
+                        <p>Kewarganegaraan: ${kewarganegaraan}</p>
+                        <p>Berlaku Hingga: ${berlaku_hingga}</p>
+                        <p>NIK: ${nik}</p>
+                        <p>Alamat: ${alamat}</p>
+                    `;
+                }
+        
+                // Contoh penggunaan function
+                tampilkanKTP("Muhammad Reza Khairan", "Cirebon, 4 April 2008", "Laki-laki", "Islam", "Belum bekerja", "Indonesia", "Seumur hidup", "1234567890123456", "Jl. Siliwangi");
+            </script>
+        </div>
+
+    </div>
+    
+</body>
+</html>
